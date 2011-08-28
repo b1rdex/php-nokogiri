@@ -9,11 +9,11 @@ $html = gzdecode(file_get_contents('http://habrahabr.ru/'));
 
 $saw = new nokogiri($html);
 var_dump($saw->get('a.habracut')->toArray());
-// Íà âûõîäå: Array(6) { [0]=> array(3) { ["class"]=> string(8) "habracut" ["href"]=> string(56) "http://habrahabr.ru/blogs/google_chrome/110099/#habracut" ["#text"]=> string(29) "×èòàòü äàëüøå >" } [1]=> ....
+// ÐÐ° Ð²Ñ‹Ñ…Ð¾Ð´Ðµ: Array(6) { [0]=> array(3) { ["class"]=> string(8) "habracut" ["href"]=> string(56) "http://habrahabr.ru/blogs/google_chrome/110099/#habracut" ["#text"]=> string(29) "Ð§Ð¸Ñ‚Ð°Ñ‚ÑŒ Ð´Ð°Ð»ÑŒÑˆÐµ >" } [1]=> ....
 var_dump($saw->get('ul.panel-nav-top li.current')->toArray());
-// Íà âûõîäå: array(2) { ["class"]=> string(7) "current" ["a"]=> array(3) { ["href"]=> string(20) "http://habrahabr.ru/" ["class"]=> string(8) "disabled" ["#text"]=> string(10) "Ïîñòû" } }
+// ÐÐ° Ð²Ñ‹Ñ…Ð¾Ð´Ðµ: array(2) { ["class"]=> string(7) "current" ["a"]=> array(3) { ["href"]=> string(20) "http://habrahabr.ru/" ["class"]=> string(8) "disabled" ["#text"]=> string(10) "ÐŸÐ¾ÑÑ‚Ñ‹" } }
 var_dump($saw->get('#sidebar dl.air-comment a.topic')->toArray());
-// Íà âûõîäå: array(50) { [0]=> array(3) { ["class"]=> string(5) "topic" ["href"]=> string(36) "http://habrahabr.ru/blogs/os/110045/" ["#text"]=> string(63) "ÔÁÐ âíåäðÿëî backdoor'û â IPSec êîä OpenBSD (?)" } [1]=> array(3) { ["cl
+// ÐÐ° Ð²Ñ‹Ñ…Ð¾Ð´Ðµ: array(50) { [0]=> array(3) { ["class"]=> string(5) "topic" ["href"]=> string(36) "http://habrahabr.ru/blogs/os/110045/" ["#text"]=> string(63) "Ð¤Ð‘Ð  Ð²Ð½ÐµÐ´Ñ€ÑÐ»Ð¾ backdoor'Ñ‹ Ð² IPSec ÐºÐ¾Ð´ OpenBSD (?)" } [1]=> array(3) { ["cl
 var_dump($saw->get('a[rel=bookmark]')->toArray());
-// Íà âûõîäå: array(10) { [0]=> array(4) { ["rel"]=> string(8) "bookmark" ["href"]=> string(47) "http://habrahabr.ru/blogs/google_chrome/110099/" ["class"]=> string(5) "topic" ["#text"]=> string(100) "Google îáúÿâèë Chrome ãîòîâûì ê èñïîëüçîâàíèþ â áèçíåñ-ñðåäå" } [1]=> array(4) { ["rel"]=
+// ÐÐ° Ð²Ñ‹Ñ…Ð¾Ð´Ðµ: array(10) { [0]=> array(4) { ["rel"]=> string(8) "bookmark" ["href"]=> string(47) "http://habrahabr.ru/blogs/google_chrome/110099/" ["class"]=> string(5) "topic" ["#text"]=> string(100) "Google Ð¾Ð±ÑŠÑÐ²Ð¸Ð» Chrome Ð³Ð¾Ñ‚Ð¾Ð²Ñ‹Ð¼ Ðº Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ð½Ð¸ÑŽ Ð² Ð±Ð¸Ð·Ð½ÐµÑ-ÑÑ€ÐµÐ´Ðµ" } [1]=> array(4) { ["rel"]=
 ?>
