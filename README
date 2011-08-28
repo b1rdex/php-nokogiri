@@ -1,9 +1,9 @@
-This is modified copy of http://code.google.com/p/kanon-framework/source/browse/trunk/src/parse/nokogiri.php be olamedia.
-Credits included in source.
+This is modified copy of http://code.google.com/p/kanon-framework/source/browse/trunk/src/parse/nokogiri.php by olamedia.
+Credits saved.
 
 Nokogiri is used to parse html using php.
-Usage:
 
+Usage:
 <?php
 $html = gzdecode(file_get_contents('http://habrahabr.ru/'));
 
