@@ -4,8 +4,6 @@
  * Description of nokogiri
  *
  * @author olamedia
- * Edited by Anatoly Pashin — added __destructor() for saving resources when using in while{}, for{} and friends.
- * 	Just remember to call unset( $saw ) when you done with iterator tick.
  */
 class nokogiri implements IteratorAggregate{
     protected $_source = '';
@@ -21,24 +19,21 @@ class nokogiri implements IteratorAggregate{
      * @var DOMXpath
      * */
     protected $_xpath = null;
+    
     public function __construct($htmlString = ''){
         $this->loadHtml($htmlString);
     }
-	public function __destruct() {
-		unset( $this->_source, $this->_dom, $this->_tempDom );
-		
-	}
     public static function fromHtml($htmlString){
         $me = new self();
         $me->loadHtml($htmlString);
         return $me;
     }
-    public static function fromDom($dom){
+    public static function fromDom( DOMDocument $dom ){
         $me = new self();
         $me->loadDom($dom);
         return $me;
     }
-    public function loadDom($dom){
+    public function loadDom( DOMDocument $dom){
         $this->_dom = $dom;
     }
     public function loadHtml($htmlString = ''){
