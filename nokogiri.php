@@ -160,4 +160,14 @@ class nokogiri implements IteratorAggregate{
         $a = $this->toArray();
         return new ArrayIterator($a);
     }
+    public  function toHTML(){
+        $dom = $this->getDom();
+        $stringNodes = array();
+        foreach($dom->firstChild->childNodes as /** @var $node DOMNode */$node){
+            $doc = new DOMDocument();
+            $doc->appendChild($doc->importNode($node,true));
+            $stringNodes[] = mb_convert_encoding($doc->saveHTML(),'UTF-8','HTML-ENTITIES');
+        }
+        return $stringNodes;
+    }
 }
