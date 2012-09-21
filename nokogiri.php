@@ -28,12 +28,12 @@ class nokogiri implements IteratorAggregate{
         $me->loadHtml($htmlString);
         return $me;
     }
-    public static function fromDom( DOMDocument $dom ){
+    public static function fromDom($dom){
         $me = new self();
         $me->loadDom($dom);
         return $me;
     }
-    public function loadDom( DOMDocument $dom){
+    public function loadDom($dom){
         $this->_dom = $dom;
     }
     public function loadHtml($htmlString = ''){
