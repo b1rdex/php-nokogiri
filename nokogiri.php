@@ -88,11 +88,11 @@ class nokogiri implements IteratorAggregate{
     protected function getXpathSubquery($expression){
         $query = '';
         if (preg_match("/(?P<tag>[a-z0-9]+)?(\[(?P<attr>\S+)=(?P<value>\S+)\])?(#(?P<id>\S+))?(\.(?P<class>\S+))?/ims", $expression, $subs)){
-            $tag = $subs['tag'];
-            $id = $subs['id'];
-            $attr = $subs['attr'];
-            $attrValue = $subs['value'];
-            $class = $subs['class'];
+            $tag = isset($subs['tag']) ? $subs['tag'] : null;
+            $id = isset($subs['id']) ? $subs['id'] : null;
+            $attr = isset($subs['attr']) ? $subs['attr'] : null ;
+            $attrValue = isset($subs['value']) ? $subs['value'] : null;
+            $class = isset($subs['class']) ? $subs['class'] : null;
             if (!strlen($tag))
                 $tag = '*';
             $query = '//'.$tag;
