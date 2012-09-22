@@ -28,15 +28,16 @@ class nokogiri implements IteratorAggregate{
         $me->loadHtml($htmlString);
         return $me;
     }
-    public static function fromDom( DOMDocument $dom ){
+    public static function fromDom($dom){
         $me = new self();
         $me->loadDom($dom);
         return $me;
     }
-    public function loadDom( DOMDocument $dom){
+    public function loadDom($dom){
         $this->_dom = $dom;
     }
     public function loadHtml($htmlString = ''){
+		$htmlString = mb_convert_encoding($htmlString, 'HTML-ENTITIES', mb_detect_encoding($htmlString));
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->preserveWhiteSpace = false;
         if (strlen($htmlString)){
@@ -87,11 +88,11 @@ class nokogiri implements IteratorAggregate{
     protected function getXpathSubquery($expression){
         $query = '';
         if (preg_match("/(?P<tag>[a-z0-9]+)?(\[(?P<attr>\S+)=(?P<value>\S+)\])?(#(?P<id>\S+))?(\.(?P<class>\S+))?/ims", $expression, $subs)){
-            $tag = $subs['tag'];
-            $id = $subs['id'];
-            $attr = $subs['attr'];
-            $attrValue = $subs['value'];
-            $class = $subs['class'];
+            $tag = isset($subs['tag']) ? $subs['tag'] : null;
+            $id = isset($subs['id']) ? $subs['id'] : null;
+            $attr = isset($subs['attr']) ? $subs['attr'] : null ;
+            $attrValue = isset($subs['value']) ? $subs['value'] : null;
+            $class = isset($subs['class']) ? $subs['class'] : null;
             if (!strlen($tag))
                 $tag = '*';
             $query = '//'.$tag;
@@ -158,5 +159,15 @@ class nokogiri implements IteratorAggregate{
     public function getIterator(){
         $a = $this->toArray();
         return new ArrayIterator($a);
+    }
+    public  function toHTML(){
+        $dom = $this->getDom();
+        $stringNodes = array();
+        foreach($dom->firstChild->childNodes as /** @var $node DOMNode */$node){
+            $doc = new DOMDocument();
+            $doc->appendChild($doc->importNode($node,true));
+            $stringNodes[] = mb_convert_encoding($doc->saveHTML(),'UTF-8','HTML-ENTITIES');
+        }
+        return $stringNodes;
     }
 }
