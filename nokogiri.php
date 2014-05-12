@@ -37,10 +37,16 @@ class nokogiri implements IteratorAggregate{
         $this->_dom = $dom;
     }
     public function loadHtml($htmlString = ''){
-		$htmlString = mb_convert_encoding($htmlString, 'HTML-ENTITIES', mb_detect_encoding($htmlString));
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->preserveWhiteSpace = false;
-        if (strlen($htmlString)){
+        if (strlen($htmlString))
+        {
+            if(substr($htmlString,0,5) != '<?xml')
+            {
+                //to sign that for libXml, otherwise the text gets messed unless there's a <meta content-type tag
+                //but hacking xml declaration is way easier, while <meta> overrides that anyway
+                $htmlString = '<?xml encoding="UTF-8">' .$htmlString;
+            }
             libxml_use_internal_errors(TRUE);
             $dom->loadHTML($htmlString);
             libxml_clear_errors();
@@ -160,14 +166,19 @@ class nokogiri implements IteratorAggregate{
         $a = $this->toArray();
         return new ArrayIterator($a);
     }
-    public  function toHTML(){
-        $dom = $this->getDom();
-        $stringNodes = array();
-        foreach($dom->firstChild->childNodes as /** @var $node DOMNode */$node){
-            $doc = new DOMDocument();
-            $doc->appendChild($doc->importNode($node,true));
-            $stringNodes[] = mb_convert_encoding($doc->saveHTML(),'UTF-8','HTML-ENTITIES');
+    public  function toHtml(){
+        if($this->_dom instanceof DOMNodeList){
+            $stringNodes = array();
+            foreach($this->_dom as /** @var DOMNode $node */ $node){
+                $html = new DOMDocument('1.0','UTF-8');
+                $stringNodes[] = $html->saveXml($html->importNode($node,true));
+            }
+            return $stringNodes;
         }
-        return $stringNodes;
+        else if ($this->_dom instanceof DOMDocument)
+        {
+            //using saveXml on second child to avoid xml/html declaration
+            return $this->_dom->saveXml($this->_dom->childNodes->item(1));
+        }
     }
 }
